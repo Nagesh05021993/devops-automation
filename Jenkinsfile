@@ -1,16 +1,26 @@
 pipeline {
     agent any
-    environment{
+	
+ environment{
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
-    }
-    stages{
-        stage('Build Maven'){
-            steps{
-                //git credentialsId: 'Password', url: 'https://github.com/Nagesh05021993/devops-automation.git'
-                git credentialsId: 'git_cred', url: 'https://github.com/Nagesh05021993/devops-automation.git'
-                sh 'mvn clean install'
-            }
+ }
+	 
+ stages {
+      stage('checkout') {
+           steps {
+             
+                git credentialsId: 'Password', url: 'https://github.com/Nagesh05021993/CI-CD-using-Docker.git'
+             
+          }
         }
+	 stage('Execute Maven') {
+           steps {
+             
+                sh 'mvn  clean package'             
+          }
+        }
+        
+
         stage('Build docker image'){
             steps{
                 script{
