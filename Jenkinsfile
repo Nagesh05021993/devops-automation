@@ -1,12 +1,12 @@
 pipeline {
     agent any
-    tools{
-        maven 'maven_3_5_0'
+    environment{
+        PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
     }
     stages{
         stage('Build Maven'){
             steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Java-Techie-jt/devops-automation']]])
+                git credentialsId: 'Password', url: 'https://github.com/Nagesh05021993/devops-automation.git'
                 sh 'mvn clean install'
             }
         }
@@ -25,13 +25,6 @@ pipeline {
 
 }
                    sh 'docker push javatechie/devops-integration'
-                }
-            }
-        }
-        stage('Deploy to k8s'){
-            steps{
-                script{
-                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
                 }
             }
         }
