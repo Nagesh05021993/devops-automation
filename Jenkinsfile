@@ -6,7 +6,8 @@ pipeline {
     stages{
         stage('Build Maven'){
             steps{
-                git credentialsId: 'Password', url: 'https://github.com/Nagesh05021993/devops-automation.git'
+                //git credentialsId: 'Password', url: 'https://github.com/Nagesh05021993/devops-automation.git'
+                git credentialsId: 'git_cred', url: 'https://github.com/Nagesh05021993/devops-automation.git'
                 sh 'mvn clean install'
             }
         }
